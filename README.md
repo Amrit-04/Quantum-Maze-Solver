@@ -14,109 +14,80 @@ For an in-depth explanation of the project, including the underlying quantum com
 - Simulation of quantum circuits using Qiskit's Aer simulator.
 - Visualization of possible paths using histogram plots.
 
-### Rough notes
+## Rough notes
 
-- Define a simple 3x3 binary maze
+## Task Overview
 
-Maze:
-1 0 1
-1 1 0
-0 1 1
+- [x] **Define the Maze**: Establish a clear representation of the maze structure.
 
-In this maze, the goal could be to move from the top-left corner to the bottom-right corner, moving only through cells marked '1'.
+  - For now using a simple binary string with a n x n maze setup
+  - ```
+    Maze:
+    1 1
+    0 1
+    ```
 
-**What do we need to do?**
+- [ ] **Run the Quantum Circuit**: Execute a quantum circuit that simulates a quantum walk.
+- [ ] **Interpret Output**: Decode the quantum state measurements to identify viable paths through the maze.
+- [ ] **Visualization** (Optional): Create graphical representations of the potential paths.
 
-- [ ] Define the maze.
-- [ ] Run the quantum circuit.
-- [ ] Interpret the output as paths through the maze.
-- [ ] (Optionally) Create visualizations for these paths.
+## Conceptual Framework: Quantum Walk
 
-**Conceptual Approach**
+### Quantum Walk Overview
 
-In a 3x3 binary maze, let's assume each row represents a decision point and each column represents a possible path. The goal is to find a path from the top to the bottom of the maze, moving only through cells marked '1'.
+A quantum walk exploits quantum mechanics principles to explore multiple paths simultaneously in a maze-like structure.
 
-- Maze Representation: We represent the maze as a 3x3 grid of 0s and 1s. Each row in the maze corresponds to a qubit in the quantum circuit. A '1' in a row means a passable path, and a '0' means a blocked path.
+### Steps for Implementing a Quantum Walk:
 
-- Quantum Circuit: We need an oracle to mark the valid paths according to the maze configuration.
+1. **Maze Representation**:
 
-_conceptual code:_
+   - Each position in a simple 2x2 maze is associated with a distinct quantum state. The maze layout:
 
-```python
-from qiskit import QuantumCircuit, Aer, execute
-from qiskit.visualization import plot_histogram
-
-def create_maze_circuit(maze):
-    qc = QuantumCircuit(3)
-
-    # Apply Hadamard gates to create superposition
-    qc.h([0, 1, 2])
-
-    # Apply the oracle
-
-    # Add measurement gates
-    qc.measure_all()
-
-    return qc
-
-def solve_maze(maze):
-    qc = create_maze_circuit(maze)
-    simulator = Aer.get_backend('qasm_simulator')
-    result = execute(qc, simulator).result()
-    counts = result.get_counts(qc)
-    return counts
-
-def interpret_results(counts, maze):
-    # Interpret the quantum results to find valid paths
-    # This is a placeholder. The real implementation would require checking the maze configuration.
-    valid_paths = []
-    for path in counts:
-        if is_path_valid(path, maze):
-            valid_paths.append(path)
-    return valid_paths
-
-def is_path_valid(path, maze):
-    # Placeholder for path validation logic
-    # Implement the logic to check if the path is valid according to the maze configuration.
-    return True
-
-# Define the maze
-maze = [[1, 0, 1], [1, 1, 0], [0, 1, 1]]
-
-# Solve the maze and get the possible paths
-possible_paths = solve_maze(maze)
-valid_paths = interpret_results(possible_paths, maze)
-print("Valid paths:", valid_paths)
-
-# Visualize the possible paths (conceptual)
-qc = create_maze_circuit(maze)
-plot_histogram(possible_paths)
-
-```
-
-- Interpreting Results: After measuring the quantum state, we interpret the output to determine the valid paths through the maze.
-
-**Conceptual Steps for a Quantum Maze Solver:**
-
-1. Maze Representation:
-
-   - The maze is represented in such a way that each position in the maze corresponds to a quantum state. For a simple 2x2 maze like:
+     ```
      Maze:
      1 1
      0 1
+     ```
 
-     Each cell can be represented by a quantum state, and the walker's position corresponds to being in one of these cells.
+   - Cells in the maze are marked '1' for passable and '0' for blocked paths.
 
-   - **Steps of the Quantum Walk**: The quantum walker moves through the maze, exploring different paths via superposition. In each step, the walker's state evolves according to predefined rules (akin to the rules of moving through the maze).
+2. **Quantum Walker Dynamics**:
 
-   - **Constraints and Goals**: The rules for updating the walker's state can include constraints based on the maze's structure (e.g., cannot move into walls represented by '0') and the goal (e.g., reaching the bottom-right corner).
+   - The quantum walker traverses the maze, exploring routes based on quantum superposition.
+   - Predefined rules guide the walker's state evolution, similar to conventional maze navigation.
 
-   - **Measuring the Walker's Position**: After a certain number of steps, measuring the walker's position collapses its superposition to a specific location, potentially indicating a path through the maze.
+3. **Constraints and Objectives**:
 
-**Challenges:**
+   - The walker's movements are constrained by the maze's structure, avoiding '0' cells.
+   - The primary goal is typically reaching a specific endpoint, such as the maze's bottom-right corner.
 
-- Oracle Design: Creating an oracle that accurately reflects the maze's layout and identifies the correct path is complex. This involves translating the maze's structure into a quantum logic gate operation.
-- Resource Requirements: A real quantum maze solver for even a small maze would require more qubits and quantum gates than are practically available on current quantum computers. _3x3 or 4x4 grid should be possible..._
+4. **Measurement and Path Determination**:
+   - Measuring the walker’s quantum state after several steps collapses the superposition to a definite position, indicating a potential path through the maze.
+
+### Quantum Walk vs. Classical Random Walk
+
+**Key Distinctions**:
+
+- **Superposition**: Quantum walkers can occupy multiple positions concurrently, as opposed to a single position in classical walks.
+- **Entanglement**: Complex systems introduce entanglement, enabling intricate movement patterns.
+- **Interference**: Path interference in quantum walks can constructively or destructively influence the walker's location probability.
+
+### Quantum Algorithm for the 2x2 Maze (Conceptual Model)
+
+1. **Initialization**:
+
+   - The quantum walker is prepared in a state of superposition, representing potential simultaneous positions.
+
+2. **Direction Determination (Coin Toss)**:
+
+   - A Hadamard gate emulates a coin toss, influencing the walker's direction in each step.
+
+3. **Conditional Position Update**:
+
+   - The walker's position shifts based on the coin toss outcome, adhering to the maze’s layout.
+
+4. **State Measurement**:
+   - After several steps, the walker's position is measured, collapsing its state to a specific location within the maze.
 
 ## Requirements
 
