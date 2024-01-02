@@ -16,7 +16,7 @@ For an in-depth explanation of the project, including the underlying quantum com
 
 ## Rough notes
 
-## Task Overview
+### Task Overview
 
 - [x] **Define the Maze**: Establish a clear representation of the maze structure.
 
@@ -31,7 +31,7 @@ For an in-depth explanation of the project, including the underlying quantum com
 - [ ] **Interpret Output**: Decode the quantum state measurements to identify viable paths through the maze.
 - [ ] **Visualization** (Optional): Create graphical representations of the potential paths.
 
-## Conceptual Framework: Quantum Walk
+### Conceptual Framework: Quantum Walk
 
 ### Quantum Walk Overview
 
@@ -89,6 +89,50 @@ A quantum walk exploits quantum mechanics principles to explore multiple paths s
 4. **State Measurement**:
    - After several steps, the walker's position is measured, collapsing its state to a specific location within the maze.
 
+### Implementation
+
+**Step 1: Designing the Maze**
+
+For simplicity, let's define a 3x3 maze where '1' represents a passable path and '0' represents an obstruction.
+
+```
+Example Maze:
+
+1 1 1
+0 1 0
+1 1 1
+```
+
+The goal is to find a path from the top-left corner (0,0) to the bottom-right corner (2,2).
+
+**Step 2: Encoding the Maze**
+
+1.  Position Encoding: In the example provided, the maze is 3x3, so we need to encode a 3x3 grid. This encoding requires two qubits for each axis (x and y) to represent four possible positions (00, 01, 10, 11).
+
+    - For the x-axis, two qubits can represent positions 0, 1, 2, and an extra position (which we won't use in a 3x3 maze).
+      Similarly, for the y-axis, another two qubits represent the vertical position.
+
+1.  State Representation: Each possible position in the maze corresponds to a unique state in the quantum system. For example, the state |00⟩|01⟩ might represent being at position (0, 1) in the maze.
+
+1.  Maze Structure: The actual structure of the maze (where the paths and walls are) is not directly encoded into the quantum state. Instead, it's used to determine the rules for how the walker can move. In the 3x3 example maze:
+
+    ```
+    1 1 1
+    0 1 0
+    1 1 1
+    ```
+
+    - '1' represents a passable path, and '0' represents an obstruction.
+    - The rules for the quantum walk (i.e., how the walker's state changes with each step) must respect these constraints. For instance, the walker cannot move to a position marked with '0'.
+
+**Step 3: Quantum Walk Implementation**
+
+- Initialize the Quantum Circuit: We need 4 qubits for the position (2 for the x-axis, 2 for the y-axis) and an additional qubit for the coin.
+
+- Apply the Quantum Walk: We implement a step of the quantum walk by applying a Hadamard gate to the coin qubit and then conditionally shifting the position qubits based on the state of the coin qubit.
+
+- Measure the Final State: After a set number of steps, we measure the position qubits.
+
 ## Requirements
 
 - Python 3.x
@@ -101,17 +145,21 @@ To set up the Quantum Maze Solver, follow these steps:
 
 1. **Clone the Repository**
 
-```
+````
+
 git clone https://github.com/viraatdas/Quantum-Maze-Solver.git
 cd Quantum-Maze-Solver
+
 ```
 
 2. **Set Up a Python Virtual Environment (Optional)**
 
 ```
+
 python -m venv venv
 source venv/bin/activate # For Unix or MacOS
 venv\Scripts\activate # For Windows
+
 ```
 
 I personally prefer [pipenv](https://pipenv.pypa.io/en/latest/) btw
@@ -119,15 +167,19 @@ I personally prefer [pipenv](https://pipenv.pypa.io/en/latest/) btw
 For _Pipenv_
 
 ```
+
 pipenv install --ignore-pipfile
 pipenv shell
+
 ```
 
 3. **Install Dependencies**
 
 ```
+
 pip install qiskit
 pip install matplotlib
+
 ```
 
 ## Usage
@@ -135,7 +187,9 @@ pip install matplotlib
 To run the Quantum Maze Solver, execute the main script:
 
 ```
+
 python solver.py
+
 ```
 
 This will run the quantum circuit for the maze and display the possible paths in a histogram.
@@ -159,3 +213,5 @@ Contributions to the Quantum Maze Solver are welcome. Please ensure to follow be
 
 - Thanks to the Qiskit community for providing an accessible quantum computing framework.
 - This project is inspired by the principles of quantum computing and its application in solving complex problems.
+```
+````
