@@ -14,6 +14,88 @@ For an in-depth explanation of the project, including the underlying quantum com
 - Simulation of quantum circuits using Qiskit's Aer simulator.
 - Visualization of possible paths using histogram plots.
 
+### Rough notes
+
+- Define a simple 3x3 binary maze
+
+Maze:
+1 0 1
+1 1 0
+0 1 1
+
+In this maze, the goal could be to move from the top-left corner to the bottom-right corner, moving only through cells marked '1'.
+
+**What do we need to do?**
+
+- [ ] Define the maze.
+- [ ] Run the quantum circuit.
+- [ ] Interpret the output as paths through the maze.
+- [ ] (Optionally) Create visualizations for these paths.
+
+**Conceptual Approach**
+
+In a 3x3 binary maze, let's assume each row represents a decision point and each column represents a possible path. The goal is to find a path from the top to the bottom of the maze, moving only through cells marked '1'.
+
+- Maze Representation: We represent the maze as a 3x3 grid of 0s and 1s. Each row in the maze corresponds to a qubit in the quantum circuit. A '1' in a row means a passable path, and a '0' means a blocked path.
+
+- Quantum Circuit: We need an oracle to mark the valid paths according to the maze configuration.
+
+_conceptual code:_
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+from qiskit.visualization import plot_histogram
+
+def create_maze_circuit(maze):
+    qc = QuantumCircuit(3)
+
+    # Apply Hadamard gates to create superposition
+    qc.h([0, 1, 2])
+
+    # Apply the oracle
+
+    # Add measurement gates
+    qc.measure_all()
+
+    return qc
+
+def solve_maze(maze):
+    qc = create_maze_circuit(maze)
+    simulator = Aer.get_backend('qasm_simulator')
+    result = execute(qc, simulator).result()
+    counts = result.get_counts(qc)
+    return counts
+
+def interpret_results(counts, maze):
+    # Interpret the quantum results to find valid paths
+    # This is a placeholder. The real implementation would require checking the maze configuration.
+    valid_paths = []
+    for path in counts:
+        if is_path_valid(path, maze):
+            valid_paths.append(path)
+    return valid_paths
+
+def is_path_valid(path, maze):
+    # Placeholder for path validation logic
+    # Implement the logic to check if the path is valid according to the maze configuration.
+    return True
+
+# Define the maze
+maze = [[1, 0, 1], [1, 1, 0], [0, 1, 1]]
+
+# Solve the maze and get the possible paths
+possible_paths = solve_maze(maze)
+valid_paths = interpret_results(possible_paths, maze)
+print("Valid paths:", valid_paths)
+
+# Visualize the possible paths (conceptual)
+qc = create_maze_circuit(maze)
+plot_histogram(possible_paths)
+
+```
+
+- Interpreting Results: After measuring the quantum state, we interpret the output to determine the valid paths through the maze.
+
 ## Requirements
 
 - Python 3.x
