@@ -100,28 +100,18 @@ plot_histogram(possible_paths)
 
 1. Maze Representation:
 
-   - Represent the maze in a way that can be processed by a quantum computer.
-   - In a 3x3 binary maze, each cell can be passable (1) or blocked (0). We need to encode this information in a way that a quantum computer can process.
+   - The maze is represented in such a way that each position in the maze corresponds to a quantum state. For a simple 2x2 maze like:
+     Maze:
+     1 1
+     0 1
 
-1. Quantum Circuit Design:
+     Each cell can be represented by a quantum state, and the walker's position corresponds to being in one of these cells.
 
-   - Create a quantum circuit that represents the maze.
-   - Use qubits to represent the state of each cell in the maze.
+   - **Steps of the Quantum Walk**: The quantum walker moves through the maze, exploring different paths via superposition. In each step, the walker's state evolves according to predefined rules (akin to the rules of moving through the maze).
 
-1. Quantum Oracle Implementation:
+   - **Constraints and Goals**: The rules for updating the walker's state can include constraints based on the maze's structure (e.g., cannot move into walls represented by '0') and the goal (e.g., reaching the bottom-right corner).
 
-   - Implement an oracle that marks the correct path through the maze.
-   - The oracle is a crucial part of Grover's algorithm, which can be used in unstructured search problems like maze solving.
-   - The oracle flips the sign of the amplitude of the state that represents the correct path, distinguishing it from incorrect ones.
-
-1. Amplitude Amplification:
-
-   - Use Grover's algorithm to amplify the probability amplitude of the correct path.
-   - This process involves applying the Grover diffusion operator multiple times.
-
-1. Measurement and Interpretation:
-   - Measure the quantum state, which collapses it to a single state.
-   - Interpret the measurement to determine the path through the maze.
+   - **Measuring the Walker's Position**: After a certain number of steps, measuring the walker's position collapses its superposition to a specific location, potentially indicating a path through the maze.
 
 **Challenges:**
 

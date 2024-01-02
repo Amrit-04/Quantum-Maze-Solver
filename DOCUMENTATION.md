@@ -2,57 +2,28 @@
 
 ## Introduction
 
-This document provides an in-depth explanation of the Quantum Maze Solver, a Python program that uses principles of quantum computing to explore possible paths through a simple maze. The program is built using Qiskit, a framework for quantum computing.
+This document provides an explanation of some of the ideas explored. In the future, a full code write-up will be provided
 
-## Code Overview
+One idea explored is using a Quantum Walk
 
-### Modules and Libraries
+### Conceptual Explanation of Quantum Walk
 
-- `QuantumCircuit`: A class from Qiskit to create quantum circuits.
-- `Aer`: A module from Qiskit that provides backends for simulation.
-- `execute`: A function from Qiskit to run quantum circuits.
-- `plot_histogram`: A function from Qiskit to visualize the results of quantum experiments.
+A quantum walk is the quantum analog of the classical random walk. In a classical random walk, such as a random walk on a line, the position of the walker changes in a stochastic manner at each step. For instance, in a one-dimensional walk, the walker moves either left or right with certain probabilities. Quantum walks, however, leverage quantum properties like superposition and entanglement, leading to a fundamentally different behavior.
 
-### Function: `create_maze_circuit()`
+**Key Differences from Classical Walks:**
 
-This function initializes and returns a 3-qubit quantum circuit. Each qubit corresponds to a decision point in the maze.
+- Superposition: In a quantum walk, the walker can be in a superposition of multiple positions at once. This means that instead of being at a single point at any given time, as in a classical walk, the quantum walker can simultaneously explore multiple paths.
 
-#### Code Breakdown
+- Entanglement: When more complex systems are involved, entanglement between different parts of the system can occur, allowing for even more complex behaviors.
 
-- `QuantumCircuit(3)`: Initializes a quantum circuit with 3 qubits.
-- `qc.h([0, 1, 2])`: Applies Hadamard gates to all qubits, creating a superposition of all possible states (paths).
-- `qc.measure_all()`: Adds measurement gates to each qubit, which are necessary to observe the final state of the qubits.
+- Interference: Quantum walks exhibit interference effects. This means that different paths can interfere with each other constructively or destructively, affecting the probability of finding the walker at certain positions.
 
-### Function: `solve_maze()`
+**The Quantum Algorithm for the 2x2 Maze**
+A toy example conceptualized:
 
-This function creates the quantum circuit for the maze, executes it, and returns the results.
+- Initial State and Superposition: The quantum walker (represented by qubits in the circuit) is initialized in a superposition of states, allowing it to be in multiple positions simultaneously.
+- Hadamard Gate for Coin Toss: The Hadamard gate is used to simulate the coin toss, determining the direction of the walker's next step.
+- Conditional Shifts: Based on the coin's outcome, the walker's position is updated (shifted right or left).
+- Measuring the Final State: After a predefined number of steps, the position is measured, collapsing the superposition to a specific state.
 
-#### Code Breakdown
-
-- `create_maze_circuit()`: Calls the previously defined function to create the quantum circuit.
-- `Aer.get_backend('qasm_simulator')`: Selects the QASM simulator backend for executing the circuit.
-- `execute(qc, simulator).result()`: Executes the circuit and collects the results.
-- `result.get_counts(qc)`: Retrieves the count of each quantum state (path) observed.
-
-### Execution and Visualization
-
-- The script executes `solve_maze()` to get all possible paths through the maze.
-- `plot_histogram(possible_paths)`: Visualizes the distribution of these paths.
-
-## Quantum Mechanics Principles
-
-### Superposition
-
-Superposition is a fundamental principle of quantum mechanics where a quantum system can be in multiple states simultaneously. In the context of this program, applying Hadamard gates to qubits places them in a superposition of 0 and 1, representing all possible decisions at each point in the maze.
-
-### Measurement
-
-In quantum mechanics, measurement collapses a superposition to a single state. When we measure our qubits, we are effectively observing which path through the maze was taken in that particular execution of the circuit.
-
-### Quantum Parallelism
-
-This concept allows a quantum computer to evaluate multiple paths simultaneously due to the superposition of qubits. Our program leverages this by creating superpositions of all possible maze paths.
-
-## Conclusion
-
-The Quantum Maze Solver is a basic demonstration of quantum computing concepts, specifically superposition and measurement. It utilizes these principles to explore all potential paths through a simple maze represented by a quantum circuit.
+For the given 2x2 maze, a more elaborate setup would be required to map the maze's structure onto the quantum circuit, and specific rules would need to be implemented to account for the maze's walls and pathways.
