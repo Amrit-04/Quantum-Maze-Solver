@@ -4,6 +4,10 @@
 
 The Quantum Maze Solver is a Python project that demonstrates the principles of quantum computing applied to the problem of solving mazes. It uses Qiskit, a quantum computing framework, to create and simulate quantum circuits that represent and explore all possible paths through a simple maze.
 
+## Documentation
+
+For an in-depth explanation of the project, including the underlying quantum computing concepts and a detailed code walkthrough, please refer to the [DOCUMENTATION.md](DOCUMENTATION.md) file.
+
 ## Features
 
 - Creation of quantum circuits to represent maze-solving paths.
@@ -33,6 +37,15 @@ cd Quantum-Maze-Solver
 python -m venv venv
 source venv/bin/activate # For Unix or MacOS
 venv\Scripts\activate # For Windows
+```
+
+I personally prefer [pipenv](https://pipenv.pypa.io/en/latest/) btw
+
+For _Pipenv_
+
+```
+pipenv install --ignore-pipfile
+pipenv shell
 ```
 
 3. **Install Dependencies**
