@@ -96,6 +96,38 @@ plot_histogram(possible_paths)
 
 - Interpreting Results: After measuring the quantum state, we interpret the output to determine the valid paths through the maze.
 
+**Conceptual Steps for a Quantum Maze Solver:**
+
+1. Maze Representation:
+
+   - Represent the maze in a way that can be processed by a quantum computer.
+   - In a 3x3 binary maze, each cell can be passable (1) or blocked (0). We need to encode this information in a way that a quantum computer can process.
+
+1. Quantum Circuit Design:
+
+   - Create a quantum circuit that represents the maze.
+   - Use qubits to represent the state of each cell in the maze.
+
+1. Quantum Oracle Implementation:
+
+   - Implement an oracle that marks the correct path through the maze.
+   - The oracle is a crucial part of Grover's algorithm, which can be used in unstructured search problems like maze solving.
+   - The oracle flips the sign of the amplitude of the state that represents the correct path, distinguishing it from incorrect ones.
+
+1. Amplitude Amplification:
+
+   - Use Grover's algorithm to amplify the probability amplitude of the correct path.
+   - This process involves applying the Grover diffusion operator multiple times.
+
+1. Measurement and Interpretation:
+   - Measure the quantum state, which collapses it to a single state.
+   - Interpret the measurement to determine the path through the maze.
+
+**Challenges:**
+
+- Oracle Design: Creating an oracle that accurately reflects the maze's layout and identifies the correct path is complex. This involves translating the maze's structure into a quantum logic gate operation.
+- Resource Requirements: A real quantum maze solver for even a small maze would require more qubits and quantum gates than are practically available on current quantum computers. _3x3 or 4x4 grid should be possible..._
+
 ## Requirements
 
 - Python 3.x
